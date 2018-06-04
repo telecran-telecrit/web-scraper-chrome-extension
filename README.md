@@ -1,3 +1,4 @@
+
 # Web Scraper
 Web Scraper is a chrome browser extension and a library built for data extraction from web 
 pages. Using this extension you can create a plan (sitemap) how a web site 

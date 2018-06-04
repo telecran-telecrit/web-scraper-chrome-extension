@@ -50,7 +50,9 @@
     "babel-plugin-meaningful-logs": "^1.0.2",
     "babel-register": "^6.24.1",
     "babelify": "^7.3.0",
+    "browserify": "^14.1.0",
     "chai": "^3.5.0",
+    "chrome-remote-interface": "^0.18.0",
     "gulp": "^3.9.1",
     "gulp-notify": "^3.0.0",
     "gulp-spawn-mocha": "^3.3.0",
@@ -66,15 +68,14 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.9.0",
-    "webworkify": "^1.4.0",
-    "chrome-remote-interface": "^0.18.0",
-    "browserify": "^14.1.0"
+    "webworkify": "^1.4.0"
   },
   "dependencies": {
     "css-selector": "git://github.com/furstenheim/css-selector.git#b50eb6befc4129ac56e91efba3dd1e233bb67202",
     "debug": "^3.1.0",
     "jquery": "^3.2.1",
     "jquery-deferred": "^0.3.1",
-    "jsdom": "^10.1.0"
+    "jsdom": "^10.1.0",
+    "puppeteer": "^1.4.0"
   }
 }

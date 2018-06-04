@@ -1,4 +1,5 @@
-const files = ['tests/browserSpec.js', 'tests/spec/*.js', 'tests/spec/**/*.js']
+const files = ['tests/browserSpec.js', 'tests/spec/*.js', 'tests/spec/browser/*.js', 'tests/spec/Selector/*Spec.js']
+const _ = require('lodash')
 module.exports = function (config) {
   config.set({
 
@@ -9,11 +10,7 @@ module.exports = function (config) {
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['browserify', 'mocha'],
 
-    preprocessors: {
-      [files[0]]: ['browserify'],
-      [files[1]]: ['browserify'],
-      [files[2]]: ['browserify']
-    },
+    preprocessors: _.mapValues(_.keyBy(files), () => ['browserify']),
     // list of files / patterns to load in the browser
     files: [
       'extension/assets/sugar-1.4.1.js',
@@ -23,7 +20,6 @@ module.exports = function (config) {
       'extension/generated/content-scraper.js',
       'extension/content_script/content_script.js',
       'docs/images/chrome-store-logo.png',
-      '/docs/images/chrome-store-logo.png',
       ...files
     ],
     customLaunchers: {

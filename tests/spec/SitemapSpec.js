@@ -6,12 +6,12 @@ const globals = require('../globals')
 
 describe('Sitemap', function () {
   let $
-let document
-let window
+  let document
+  let window
   beforeEach(function () {
     $ = globals.$
-document = globals.document
-window = globals.window
+    document = globals.document
+    window = globals.window
 
   })
   it('should be able to rename selector with a parent', function () {
@@ -34,7 +34,7 @@ window = globals.window
 
     var sitemap = new Sitemap({
       selectors: selectors
-    }, {$, document, window})
+    }, { $, document, window })
 
     var expected = new Selector({
       id: 'b',
@@ -42,11 +42,11 @@ window = globals.window
       parentSelectors: [
         'parent'
       ]
-    }, {$, document, window})
+    }, { $, document, window })
 
-		// no hard decidions here
-    sitemap.updateSelector(sitemap.selectors[1], expected)
-    assert.deepEqual(sitemap.selectors[1], expected)
+    // no hard decidions here
+    sitemap.updateSelector(sitemap.selectors[ 1 ], expected)
+    assert.deepEqual(sitemap.selectors[ 1 ], expected)
   })
 
   it('should be able to rename selector with child selectors', function () {
@@ -69,7 +69,7 @@ window = globals.window
 
     var sitemap = new Sitemap({
       selectors: selectors
-    }, {$, document, window})
+    }, { $, document, window })
 
     var expected = new Selector({
       id: 'b',
@@ -77,7 +77,7 @@ window = globals.window
       parentSelectors: [
         '_root'
       ]
-    }, {$, document, window})
+    }, { $, document, window })
 
     var expectedChild = new Selector({
       id: 'child',
@@ -85,12 +85,12 @@ window = globals.window
       parentSelectors: [
         'b'
       ]
-    }, {$, document, window})
+    }, { $, document, window })
 
-		// no hard decidions here
-    sitemap.updateSelector(sitemap.selectors[1], expected)
-    assert.deepEqual(sitemap.selectors[1], expected)
-    assert.deepEqual(sitemap.selectors[0], expectedChild)
+    // no hard decidions here
+    sitemap.updateSelector(sitemap.selectors[ 1 ], expected)
+    assert.deepEqual(sitemap.selectors[ 1 ], expected)
+    assert.deepEqual(sitemap.selectors[ 0 ], expectedChild)
   })
 
   it('should be able to rename selector who is his own parent', function () {
@@ -106,7 +106,7 @@ window = globals.window
 
     var sitemap = new Sitemap({
       selectors: selectors
-    }, {$, document, window})
+    }, { $, document, window })
 
     var update = new Selector({
       id: 'b',
@@ -114,7 +114,7 @@ window = globals.window
       parentSelectors: [
         'a'
       ]
-    }, {$, document, window})
+    }, { $, document, window })
 
     var expected = new Selector({
       id: 'b',
@@ -122,11 +122,11 @@ window = globals.window
       parentSelectors: [
         'b'
       ]
-    }, {$, document, window})
+    }, { $, document, window })
 
-		// no hard decidions here
-    sitemap.updateSelector(sitemap.selectors[0], update)
-    assert.deepEqual(sitemap.selectors[0], expected)
+    // no hard decidions here
+    sitemap.updateSelector(sitemap.selectors[ 0 ], update)
+    assert.deepEqual(sitemap.selectors[ 0 ], expected)
   })
 
   it('should be able to change selector type', function () {
@@ -140,7 +140,7 @@ window = globals.window
           ]
         }
       ]
-    }, {$, document, window})
+    }, { $, document, window })
 
     var update = new Selector({
       id: 'a',
@@ -148,11 +148,11 @@ window = globals.window
       parentSelectors: [
         'a'
       ]
-    }, {$, document, window})
+    }, { $, document, window })
 
-    assert.isFalse(sitemap.selectors[0].canCreateNewJobs())
-    sitemap.updateSelector(sitemap.selectors[0], update)
-    assert.isTrue(sitemap.selectors[0].canCreateNewJobs())
+    assert.isFalse(sitemap.selectors[ 0 ].canCreateNewJobs())
+    sitemap.updateSelector(sitemap.selectors[ 0 ], update)
+    assert.isTrue(sitemap.selectors[ 0 ].canCreateNewJobs())
   })
 
   it('should be able to export as JSON', function () {
@@ -168,7 +168,7 @@ window = globals.window
           ]
         }
       ]
-    }, {$, document, window})
+    }, { $, document, window })
 
     var sitemapJSON = sitemap.exportSitemap()
     var expectedJSON = '{"_id":"id","selectors":[{"id":"a","type":"SelectorElement","parentSelectors":["a"]}]}'
@@ -187,10 +187,10 @@ window = globals.window
           ]
         }
       ]
-    }, {$, document, window})
+    }, { $, document, window })
 
     var sitemapJSON = '{"_id":"id","selectors":[{"id":"a","type":"SelectorElement","parentSelectors":["a"]}]}'
-    var sitemap = new Sitemap(null, {$, document, window})
+    var sitemap = new Sitemap(null, { $, document, window })
     sitemap.importSitemap(sitemapJSON)
     assert.deepEqual(sitemap, expectedSitemap)
   })
@@ -209,13 +209,13 @@ window = globals.window
           selector: 'b'
         }
       ]
-    }, {$, document, window})
+    }, { $, document, window })
 
     var data = [
-			{a: 'a', b: 'b', c: 'c'}
+      { a: 'a', b: 'b', c: 'c' }
     ]
     var blob = sitemap.getDataExportCsvBlob(data)
-		// can't access the data so I'm just checking whether this runs
+    // can't access the data so I'm just checking whether this runs
     assert.equal(blob.toString(), '[object Blob]')
   })
 
@@ -233,10 +233,10 @@ window = globals.window
           selector: 'b'
         }
       ]
-    }, {$, document, window})
+    }, { $, document, window })
 
     var columns = sitemap.getDataColumns()
-    assert.deepEqual(columns, ['a', 'b', 'b-href'])
+    assert.deepEqual(columns, [ 'a', 'b', 'b-href' ])
   })
 
   it('should be able to delete a selector', function () {
@@ -246,18 +246,18 @@ window = globals.window
           id: 'a',
           type: 'SelectorText',
           selector: 'div',
-          parentSelectors: ['_root']
+          parentSelectors: [ '_root' ]
         },
         {
           id: 'b',
           type: 'SelectorLink',
           selector: 'b',
-          parentSelectors: ['_root']
+          parentSelectors: [ '_root' ]
         }
       ]
-    }, {$, document, window})
+    }, { $, document, window })
 
-    sitemap.deleteSelector(sitemap.selectors[0])
+    sitemap.deleteSelector(sitemap.selectors[ 0 ])
 
     assert.equal(sitemap.selectors.length, 1)
   })
@@ -269,18 +269,18 @@ window = globals.window
           id: 'a',
           type: 'SelectorText',
           selector: 'div',
-          parentSelectors: ['_root']
+          parentSelectors: [ '_root' ]
         },
         {
           id: 'b',
           type: 'SelectorLink',
           selector: 'b',
-          parentSelectors: ['a']
+          parentSelectors: [ 'a' ]
         }
       ]
-    }, {$, document, window})
+    }, { $, document, window })
 
-    sitemap.deleteSelector(sitemap.selectors[0])
+    sitemap.deleteSelector(sitemap.selectors[ 0 ])
     assert.equal(sitemap.selectors.length, 0)
   })
 
@@ -291,45 +291,45 @@ window = globals.window
           id: 'a',
           type: 'SelectorText',
           selector: 'div',
-          parentSelectors: ['_root']
+          parentSelectors: [ '_root' ]
         },
         {
           id: 'b',
           type: 'SelectorLink',
           selector: 'b',
-          parentSelectors: ['a']
+          parentSelectors: [ 'a' ]
         },
         {
           id: 'c',
           type: 'SelectorLink',
           selector: 'c',
-          parentSelectors: ['b', '_root']
+          parentSelectors: [ 'b', '_root' ]
         }
       ]
-    }, {$, document, window})
+    }, { $, document, window })
     var expectedSelector = new Selector({
       id: 'c',
       type: 'SelectorLink',
       selector: 'c',
-      parentSelectors: ['_root']
-    }, {$, document, window})
+      parentSelectors: [ '_root' ]
+    }, { $, document, window })
 
-    sitemap.deleteSelector(sitemap.selectors[0])
-    assert.deepEqual(sitemap.selectors, new SelectorList([expectedSelector], {$, document, window}))
+    sitemap.deleteSelector(sitemap.selectors[ 0 ])
+    assert.deepEqual(sitemap.selectors, new SelectorList([ expectedSelector ], { $, document, window }))
   })
 
   it('Should return one start url', function () {
     var sitemap = new Sitemap({
       startUrl: 'http://example.com/'
-    }, {$, document, window})
-    var expectedURLS = ['http://example.com/']
+    }, { $, document, window })
+    var expectedURLS = [ 'http://example.com/' ]
     assert.deepEqual(sitemap.getStartUrls(), expectedURLS)
   })
 
   it('Should return multiple start urls', function () {
     var sitemap = new Sitemap({
       startUrl: 'http://example.com/[1-3].html'
-    }, {$, document, window})
+    }, { $, document, window })
     var expectedURLS = [
       'http://example.com/1.html',
       'http://example.com/2.html',
@@ -341,7 +341,7 @@ window = globals.window
   it('Should return multiple start urls with id at the end', function () {
     var sitemap = new Sitemap({
       startUrl: 'http://example.com/?id=[1-3]'
-    }, {$, document, window})
+    }, { $, document, window })
     var expectedURLS = [
       'http://example.com/?id=1',
       'http://example.com/?id=2',
@@ -353,7 +353,7 @@ window = globals.window
   it('should return multiple start urls with specified incremental', function () {
     var sitemap = new Sitemap({
       startUrl: 'http://example.com/?id=[0-20:10]'
-    }, {$, document, window})
+    }, { $, document, window })
     var expectedURLS = [
       'http://example.com/?id=0',
       'http://example.com/?id=10',
@@ -365,7 +365,7 @@ window = globals.window
   it('Should return multiple start urls with padding', function () {
     var sitemap = new Sitemap({
       startUrl: 'http://example.com/[001-003].html'
-    }, {$, document, window})
+    }, { $, document, window })
     var expectedURLS = [
       'http://example.com/001.html',
       'http://example.com/002.html',
@@ -376,8 +376,8 @@ window = globals.window
 
   it('Should return multiple start urls when startUrl is an array', function () {
     var sitemap = new Sitemap({
-      startUrl: ['http://example.com/1.html', 'http://example.com/2.html', 'http://example.com/3.html']
-    }, {$, document, window})
+      startUrl: [ 'http://example.com/1.html', 'http://example.com/2.html', 'http://example.com/3.html' ]
+    }, { $, document, window })
     var expectedURLS = [
       'http://example.com/1.html',
       'http://example.com/2.html',
@@ -414,9 +414,9 @@ window = globals.window
           type: 'SelectorText'
         }
       ]
-    }, {$, document, window})
+    }, { $, document, window })
 
-    var expectedIds = ['_root', 'a', 'e']
+    var expectedIds = [ '_root', 'a', 'e' ]
     assert.deepEqual(sitemap.getPossibleParentSelectorIds(), expectedIds)
   })
 })

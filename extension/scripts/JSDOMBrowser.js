@@ -44,10 +44,11 @@ JSDOMBrowser.prototype = {
   fetchData: function (url, sitemap, parentSelectorId, callback, scope) {
     const browser = this
     debug('Init jsdom browser app')
-    browser.loadUrl(url, function (err, {$, document, window}) {
+    browser.loadUrl(url, function (err, options) {
       if (err) {
         return callback(err)
       }
+      const {$, document, window} = options
 
       var message = {
         extractData: true,

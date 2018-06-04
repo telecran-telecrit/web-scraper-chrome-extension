@@ -32,7 +32,8 @@ function runJSDOMTests () {
   return gulp.src([
     'tests/jsdomSpec.js',
     'tests/spec/*Spec.js',
-    'tests/spec/Selector/*Spec.js'
+    'tests/spec/Selector/*Spec.js',
+    'tests/spec/jsdom/*Spec.js'
   ])
     .pipe(mocha({
       compilers: 'js:babel-register'

@@ -6,13 +6,13 @@ const globals = require('../../globals')
 describe('Element Attribute Selector', function () {
   var $el
   let $
-let document
-let window
+  let document
+  let window
 
   beforeEach(function () {
     $ = globals.$
-document = globals.document
-window = globals.window
+    document = globals.document
+    window = globals.window
 
     document.body.innerHTML = utils.getTestHTML()
     $el = utils.createElementFromHTML("<div id='tests' style='display:none'></div>", document)
@@ -26,7 +26,7 @@ window = globals.window
       multiple: false,
       extractAttribute: 'src',
       selector: 'img'
-    }, {$, document, window})
+    }, { $, document, window })
 
     var dataDeferred = selector.getData(document.querySelector('#selector-image-one-image'))
     dataDeferred.then(function (data) {
@@ -46,7 +46,7 @@ window = globals.window
       multiple: true,
       extractAttribute: 'src',
       selector: 'img'
-    }, {$, document, window})
+    }, { $, document, window })
 
     var dataDeferred = selector.getData(document.querySelector('#selector-image-multiple-images'))
 
@@ -69,10 +69,10 @@ window = globals.window
       type: 'SelectorElementAttribute',
       multiple: true,
       selector: 'img'
-    }, {$, document, window})
+    }, { $, document, window })
 
     var columns = selector.getDataColumns()
-    assert.deepEqual(columns, ['id'])
+    assert.deepEqual(columns, [ 'id' ])
   })
 
   it('should return empty array when no images are found', function (done) {
@@ -82,7 +82,7 @@ window = globals.window
       multiple: true,
       selector: 'img.not-exist',
       extractAttribute: 'src'
-    }, {$, document, window})
+    }, { $, document, window })
 
     var dataDeferred = selector.getData(document.querySelector('#not-exist'))
 
@@ -102,14 +102,14 @@ window = globals.window
       multiple: true,
       selector: 'li',
       extractAttribute: 'data-type'
-    }, {$, document, window})
+    }, { $, document, window })
 
     var dataDeferred = selector.getData($el)
 
     dataDeferred.then(function (data) {
-      assert.deepEqual(data, [{
+      assert.deepEqual(data, [ {
         'type': 'dog'
-      }])
+      } ])
       done()
     })
   })

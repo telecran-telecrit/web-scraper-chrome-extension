@@ -15,7 +15,7 @@ const runTests = (function () {
     // One build per bundle
     if (builds % 3 === 0) {
       runKarma(done)
-      runJSDOMTests()
+      runNodeTests()
     }
   }
 })()
@@ -28,12 +28,13 @@ function runKarma (done) {
   server.start()
 }
 
-function runJSDOMTests () {
+function runNodeTests () {
   return gulp.src([
     'tests/jsdomSpec.js',
     'tests/spec/*Spec.js',
     'tests/spec/Selector/*Spec.js',
-    'tests/spec/jsdom/*Spec.js'
+    'tests/spec/jsdom/*Spec.js',
+    'tests/spec/headless/*Spec.js'
   ])
     .pipe(mocha({
       compilers: 'js:babel-register'

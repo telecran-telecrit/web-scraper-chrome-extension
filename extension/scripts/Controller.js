@@ -1126,7 +1126,7 @@ var window = this.window
       var dataPanel = ich.SitemapBrowseData({
         columns: dataColumns
       })
-      this.$('#viewport').html(dataPanel) 
+      this.$('#viewport').html(dataPanel)
 
 			// display data
 			// Doing this the long way so there aren't xss vulnerubilites

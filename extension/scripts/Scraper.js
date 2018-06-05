@@ -9,14 +9,6 @@ var Scraper = function (options, moreOptions) {
   this.resultWriter = null // db instance for scraped data writing
   this.requestInterval = parseInt(options.requestInterval)
   this.pageLoadDelay = parseInt(options.pageLoadDelay)
-
-  // It isn't actually much needed, only to get teh
-  this.$ = moreOptions.$
-  this.document = moreOptions.document
-  this.window = moreOptions.window
-  if (!moreOptions.$) throw new Error('Missing jquery')
-  if (!moreOptions.window) throw new Error('Missing window')
-  if (!moreOptions.document) throw new Error('Missing document')
 }
 
 Scraper.prototype = {

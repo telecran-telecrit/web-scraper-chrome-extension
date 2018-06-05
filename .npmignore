@@ -1,0 +1,10 @@
+.idea
+projectFilesBackup
+extension.zip
+node_modules
+npm-debug.log
+extension/assets/*
+extension/assets/*/
+!extension/assets/jquery.whencallsequentially.js
+!extension/assets/base64.js
+docs/images/*

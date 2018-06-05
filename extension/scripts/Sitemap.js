@@ -19,67 +19,66 @@ var Sitemap = function (sitemapObj, options) {
     enumerable: false
   })
   if (!this.$) throw new Error('Missing jquery')
-if (!this.document) {
-  console.error((new Error()).stack)
+  if (!this.document) {
+    console.error((new Error()).stack)
 
-  throw new Error("Missing document")
-}
-if(!this.window)throw new Error("Missing window")
+    throw new Error("Missing document")
+  }
+  if (!this.window) throw new Error("Missing window")
   this.initData(sitemapObj)
 }
 
 Sitemap.prototype = {
-
   initData: function (sitemapObj) {
     debug(this)
     for (var key in sitemapObj) {
       debug(key)
-      this[key] = sitemapObj[key]
+      this[ key ] = sitemapObj[ key ]
     }
     debug(this)
     var $ = this.$
     var window = this.window
     var document = this.document
     var selectors = this.selectors
-    this.selectors = new SelectorList(this.selectors, {$, window, document})
+    this.selectors = new SelectorList(this.selectors, { $, window, document })
   },
 
-	/**
-	 * Returns all selectors or recursively find and return all child selectors of a parent selector.
-	 * @param parentSelectorId
-	 * @returns {Array}
-	 */
+  /**
+   * Returns all selectors or recursively find and return all child selectors of a parent selector.
+   * @param parentSelectorId
+   * @returns {Array}
+   */
   getAllSelectors: function (parentSelectorId) {
     return this.selectors.getAllSelectors(parentSelectorId)
   },
 
-	/**
-	 * Returns only selectors that are directly under a parent
-	 * @param parentSelectorId
-	 * @returns {Array}
-	 */
+  /**
+   * Returns only selectors that are directly under a parent
+   * @param parentSelectorId
+   * @returns {Array}
+   */
   getDirectChildSelectors: function (parentSelectorId) {
     return this.selectors.getDirectChildSelectors(parentSelectorId)
   },
 
-	/**
-	 * Returns all selector id parameters
-	 * @returns {Array}
-	 */
+  /**
+   * Returns all selector id parameters
+   * @returns {Array}
+   */
   getSelectorIds: function () {
-    var ids = ['_root']
+    var ids = [ '_root' ]
     this.selectors.forEach(function (selector) {
       ids.push(selector.id)
     })
     return ids
   },
 
-	/**
-	 * Returns only selector ids which can have child selectors
-	 * @returns {Array}
-	 */
+  /**
+   * Returns only selector ids which can have child selectors
+   * @returns {Array}
+   */
   getPossibleParentSelectorIds: function () {
-    var ids = ['_root']
+    var ids = [ '_root' ]
     this.selectors.forEach(function (selector) {
       if (selector.canHaveChildSelectors()) {
         ids.push(selector.id)
@@ -90,14 +89,14 @@ Sitemap.prototype = {
 
   getStartUrls: function () {
     var startUrls = this.startUrl
-		// single start url
+    // single start url
     if (this.startUrl.push === undefined) {
-      startUrls = [startUrls]
+      startUrls = [ startUrls ]
     }
 
     var urls = []
     startUrls.forEach(function (startUrl) {
-			// zero padding helper
+      // zero padding helper
       var lpad = function (str, length) {
         while (str.length < length) { str = '0' + str }
         return str
@@ -106,21 +105,21 @@ Sitemap.prototype = {
       var re = /^(.*?)\[(\d+)\-(\d+)(:(\d+))?\](.*)$/
       var matches = startUrl.match(re)
       if (matches) {
-        var startStr = matches[2]
-        var endStr = matches[3]
+        var startStr = matches[ 2 ]
+        var endStr = matches[ 3 ]
         var start = parseInt(startStr)
         var end = parseInt(endStr)
         var incremental = 1
-        debug(matches[5])
-        if (matches[5] !== undefined) {
-          incremental = parseInt(matches[5])
+        debug(matches[ 5 ])
+        if (matches[ 5 ] !== undefined) {
+          incremental = parseInt(matches[ 5 ])
         }
         for (var i = start; i <= end; i += incremental) {
-					// with zero padding
+          // with zero padding
           if (startStr.length === endStr.length) {
-            urls.push(matches[1] + lpad(i.toString(), startStr.length) + matches[6])
+            urls.push(matches[ 1 ] + lpad(i.toString(), startStr.length) + matches[ 6 ])
           } else {
-            urls.push(matches[1] + i + matches[6])
+            urls.push(matches[ 1 ] + i + matches[ 6 ])
           }
         }
         return urls
@@ -133,21 +132,21 @@ Sitemap.prototype = {
   },
 
   updateSelector: function (selector, selectorData) {
-		// selector is undefined when creating a new one
+    // selector is undefined when creating a new one
     if (selector === undefined) {
-var $ = this.$
-var document = this.document
-var window = this.window
-      selector = new Selector(selectorData, {$, window, document})
+      var $ = this.$
+      var document = this.document
+      var window = this.window
+      selector = new Selector(selectorData, { $, window, document })
     }
 
-		// update child selectors
+    // update child selectors
     if (selector.id !== undefined && selector.id !== selectorData.id) {
       this.selectors.forEach(function (currentSelector) {
         currentSelector.renameParentSelector(selector.id, selectorData.id)
       })
 
-			// update cyclic selector
+      // update cyclic selector
       var pos = selectorData.parentSelectors.indexOf(selector.id)
       if (pos !== -1) {
         selectorData.parentSelectors.splice(pos, 1, selectorData.id)
@@ -171,7 +170,7 @@ var window = this.window
     }.bind(this))
 
     for (var i in this.selectors) {
-      if (this.selectors[i].id === selectorToDelete.id) {
+      if (this.selectors[ i ].id === selectorToDelete.id) {
         this.selectors.splice(i, 1)
         break
       }
@@ -189,7 +188,7 @@ var window = this.window
     var sitemapObj = JSON.parse(sitemapJSON)
     this.initData(sitemapObj)
   },
-	// return a list of columns than can be exported
+  // return a list of columns than can be exported
   getDataColumns: function () {
     var columns = []
     this.selectors.forEach(function (selector) {
@@ -203,19 +202,19 @@ var window = this.window
     var columns = this.getDataColumns(),
       delimiter = ';',
       newline = '\n',
-      csvData = ['\ufeff'] // utf-8 bom char
+      csvData = [ '\ufeff' ] // utf-8 bom char
 
-		// header
+    // header
     csvData.push(columns.join(delimiter) + newline)
 
-		// data
+    // data
     data.forEach(function (row) {
       var rowData = []
       columns.forEach(function (column) {
-        var cellData = row[column]
+        var cellData = row[ column ]
         if (cellData === undefined) {
           cellData = ''
-        }				else if (typeof cellData === 'object') {
+        } else if (typeof cellData === 'object') {
           cellData = JSON.stringify(cellData)
         }
 
@@ -224,21 +223,21 @@ var window = this.window
       csvData.push(rowData.join(delimiter) + newline)
     })
 
-    return new window.Blob(csvData, {type: 'text/csv'})
+    return new window.Blob(csvData, { type: 'text/csv' })
   },
   getSelectorById: function (selectorId) {
     return this.selectors.getSelectorById(selectorId)
   },
-	/**
-	 * Create full clone of sitemap
-	 * @returns {Sitemap}
-	 */
+  /**
+   * Create full clone of sitemap
+   * @returns {Sitemap}
+   */
   clone: function () {
     var $ = this.$
     var document = this.document
     var window = this.window
     var clonedJSON = JSON.parse(JSON.stringify(this))
-    var sitemap = new Sitemap(clonedJSON, {$, document, window})
+    var sitemap = new Sitemap(clonedJSON, { $, document, window })
     return sitemap
   }
 }

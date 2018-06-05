@@ -18,15 +18,15 @@ var SelectorList = function (selectors, options) {
     enumerable: false
   })
   if (!this.$) throw new Error('Missing jquery')
-if (!this.document) throw new Error("Missing document")
-if(!this.window)throw new Error("Missing window")
+  if (!this.document) throw new Error("Missing document")
+  if (!this.window) throw new Error("Missing window")
 
   if (selectors === null || selectors === undefined) {
     return
   }
 
   for (var i = 0; i < selectors.length; i++) {
-    this.push(selectors[i])
+    this.push(selectors[ i ])
   }
 }
 
@@ -35,10 +35,10 @@ SelectorList.prototype = []
 SelectorList.prototype.push = function (selector) {
   if (!this.hasSelector(selector.id)) {
     if (!(selector instanceof Selector)) {
-var $ = this.$
-var document = this.document
-var window = this.window
-      selector = new Selector(selector, {$, window, document})
+      var $ = this.$
+      var document = this.document
+      var window = this.window
+      selector = new Selector(selector, { $, window, document })
     }
     Array.prototype.push.call(this, selector)
   }
@@ -50,7 +50,7 @@ SelectorList.prototype.hasSelector = function (selectorId) {
   }
 
   for (var i = 0; i < this.length; i++) {
-    if (this[i].id === selectorId) {
+    if (this[ i ].id === selectorId) {
       return true
     }
   }
@@ -89,10 +89,10 @@ SelectorList.prototype.getAllSelectors = function (parentSelectorId) {
  * @returns {Array}
  */
 SelectorList.prototype.getDirectChildSelectors = function (parentSelectorId) {
-var $ = this.$
-var document = this.document
-var window = this.window
-  var resultSelectors = new SelectorList(null, {$, window, document})
+  var $ = this.$
+  var document = this.document
+  var window = this.window
+  var resultSelectors = new SelectorList(null, { $, window, document })
   this.forEach(function (selector) {
     if (selector.hasParentSelector(parentSelectorId)) {
       resultSelectors.push(selector)
@@ -102,10 +102,10 @@ var window = this.window
 }
 
 SelectorList.prototype.clone = function () {
-var $ = this.$
-var document = this.document
-var window = this.window
-  var resultList = new SelectorList(null, {$, window, document})
+  var $ = this.$
+  var document = this.document
+  var window = this.window
+  var resultList = new SelectorList(null, { $, window, document })
   this.forEach(function (selector) {
     resultList.push(selector)
   })
@@ -113,10 +113,10 @@ var window = this.window
 }
 
 SelectorList.prototype.fullClone = function () {
-var $ = this.$
-var document = this.document
-var window = this.window
-  var resultList = new SelectorList(null, {$, window, document})
+  var $ = this.$
+  var document = this.document
+  var window = this.window
+  var resultList = new SelectorList(null, { $, window, document })
   this.forEach(function (selector) {
     resultList.push(JSON.parse(JSON.stringify(selector)))
   })
@@ -126,7 +126,7 @@ var window = this.window
 SelectorList.prototype.concat = function () {
   var resultList = this.clone()
   for (var i in arguments) {
-    arguments[i].forEach(function (selector) {
+    arguments[ i ].forEach(function (selector) {
       resultList.push(selector)
     })
   }
@@ -135,7 +135,7 @@ SelectorList.prototype.concat = function () {
 
 SelectorList.prototype.getSelector = function (selectorId) {
   for (var i = 0; i < this.length; i++) {
-    var selector = this[i]
+    var selector = this[ i ]
     if (selector.id === selectorId) {
       return selector
     }
@@ -149,14 +149,14 @@ SelectorList.prototype.getSelector = function (selectorId) {
  * @returns {*}
  */
 SelectorList.prototype.getOnePageSelectors = function (selectorId) {
-var $ = this.$
-var document = this.document
-var window = this.window
-  var resultList = new SelectorList(null, {$, window, document})
+  var $ = this.$
+  var document = this.document
+  var window = this.window
+  var resultList = new SelectorList(null, { $, window, document })
   var selector = this.getSelector(selectorId)
   resultList.push(this.getSelector(selectorId))
 
-	// recursively find all parent selectors that could lead to the page where selectorId is used.
+  // recursively find all parent selectors that could lead to the page where selectorId is used.
   var findParentSelectors = function (selector) {
     selector.parentSelectors.forEach(function (parentSelectorId) {
       if (parentSelectorId === '_root') return
@@ -171,7 +171,7 @@ var window = this.window
 
   findParentSelectors(selector)
 
-	// add all child selectors
+  // add all child selectors
   resultList = resultList.concat(this.getSinglePageAllChildSelectors(selector.id))
   return resultList
 }
@@ -181,10 +181,10 @@ var window = this.window
  * @param parentSelectorId
  */
 SelectorList.prototype.getSinglePageAllChildSelectors = function (parentSelectorId) {
-var $ = this.$
-var document = this.document
-var window = this.window
-  var resultList = new SelectorList(null, {$, window, document})
+  var $ = this.$
+  var document = this.document
+  var window = this.window
+  var resultList = new SelectorList(null, { $, window, document })
   var addChildSelectors = function (parentSelector) {
     if (parentSelector.willReturnElements()) {
       var childSelectors = this.getDirectChildSelectors(parentSelector.id)
@@ -203,16 +203,16 @@ var window = this.window
 }
 
 SelectorList.prototype.willReturnMultipleRecords = function (selectorId) {
-	// handle reuqested selector
+  // handle reuqested selector
   var selector = this.getSelector(selectorId)
   if (selector.willReturnMultipleRecords() === true) {
     return true
   }
 
-	// handle all its child selectors
+  // handle all its child selectors
   var childSelectors = this.getAllSelectors(selectorId)
   for (var i = 0; i < childSelectors.length; i++) {
-    var selector = childSelectors[i]
+    var selector = childSelectors[ i ]
     if (selector.willReturnMultipleRecords() === true) {
       return true
     }
@@ -235,7 +235,7 @@ SelectorList.prototype.toJSON = function () {
 
 SelectorList.prototype.getSelectorById = function (selectorId) {
   for (var i = 0; i < this.length; i++) {
-    var selector = this[i]
+    var selector = this[ i ]
     if (selector.id === selectorId) {
       return selector
     }
@@ -265,7 +265,7 @@ SelectorList.prototype.getParentCSSSelectorWithinOnePage = function (parentSelec
   var CSSSelector = ''
 
   for (var i = parentSelectorIds.length - 1; i > 0; i--) {
-    var parentSelectorId = parentSelectorIds[i]
+    var parentSelectorId = parentSelectorIds[ i ]
     var parentSelector = this.getSelector(parentSelectorId)
     if (parentSelector.willReturnElements()) {
       CSSSelector = parentSelector.selector + ' ' + CSSSelector
@@ -284,7 +284,7 @@ SelectorList.prototype.hasRecursiveElementSelectors = function () {
     var visitedSelectors = []
 
     var checkRecursion = function (parentSelector) {
-			// already visited
+      // already visited
       if (visitedSelectors.indexOf(parentSelector) !== -1) {
         RecursionFound = true
         return

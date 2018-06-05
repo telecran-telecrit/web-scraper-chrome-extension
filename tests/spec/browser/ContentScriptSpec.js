@@ -7,13 +7,13 @@ describe('ContentScript', function () {
   var contentScript = getContentScript('ContentScript')
   var $el
   let $
-let document
-let window
+  let document
+  let window
 
   beforeEach(function () {
     $ = globals.$
-document = globals.document
-window = globals.window
+    document = globals.document
+    window = globals.window
 
     document.body.innerHTML = utils.getTestHTML()
     $el = utils.createElementFromHTML("<div id='tests' style='display:none'></div>", document)
@@ -25,7 +25,7 @@ window = globals.window
 
     var deferredHMTL = contentScript.getHTML({
       CSSSelector: 'div#content-script-html-selector-test'
-    }, {$, document, window})
+    }, { $, document, window })
     await selectorMatchers.deferredToEqual(deferredHMTL, '<div id="content-script-html-selector-test"></div>')
   })
 
@@ -36,7 +36,7 @@ window = globals.window
 
     var deferredHMTL = contentScript.getHTML({
       CSSSelector: 'div#content-script-html-selector-test'
-    }, {$, document, window})
+    }, { $, document, window })
     await selectorMatchers.deferredToEqual(deferredHMTL, '<div id="content-script-html-selector-test"></div>')
   })
 
@@ -47,7 +47,7 @@ window = globals.window
 
     var deferredHMTL = contentScript.getHTML({
       CSSSelector: 'div#content-script-html-selector-test'
-    }, {$, document, window})
+    }, { $, document, window })
 
     await selectorMatchers.deferredToEqual(deferredHMTL, '<div id="content-script-html-selector-test"></div>')
   })
@@ -59,15 +59,15 @@ window = globals.window
     var deferredCSSSelector = contentScript.selectSelector({
       parentCSSSelector: 'div#content-script-css-selector-test',
       allowedElements: 'a'
-    }, {$, document, window})
+    }, { $, document, window })
 
-		// click on the element that will be selected
+    // click on the element that will be selected
     $el.querySelector('a.needed').click()
 
-		// finish selection
+    // finish selection
     document.body.querySelector('#-selector-toolbar .done-selecting-button').click()
 
-    await selectorMatchers.deferredToEqual(deferredCSSSelector, {CSSSelector: 'a.needed'})
+    await selectorMatchers.deferredToEqual(deferredCSSSelector, { CSSSelector: 'a.needed' })
 
     assert.equal(window.cs, undefined)
   })
@@ -79,12 +79,12 @@ window = globals.window
     var deferredCSSSelector = contentScript.selectSelector({
       parentCSSSelector: 'div#content-script-css-selector-test',
       allowedElements: 'a'
-    }, {$, document, window})
+    }, { $, document, window })
 
-		// finish selection
+    // finish selection
     document.body.querySelector('#-selector-toolbar .done-selecting-button').click()
 
-    await selectorMatchers.deferredToEqual(deferredCSSSelector, {CSSSelector: ''})
+    await selectorMatchers.deferredToEqual(deferredCSSSelector, { CSSSelector: '' })
 
     assert.equal(window.cs, undefined)
   })
@@ -96,7 +96,7 @@ window = globals.window
     var deferredSelectorPreview = contentScript.previewSelector({
       parentCSSSelector: 'div#content-script-css-selector-test',
       elementCSSSelector: 'a'
-    }, {$, document, window})
+    }, { $, document, window })
 
     assert.equal($('.-sitemap-select-item-selected').length, 1)
     assert.isTrue(document.querySelector('#content-script-css-selector-test').classList.contains('-sitemap-parent'))

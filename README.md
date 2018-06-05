@@ -55,7 +55,16 @@ To use it as a library you need a sitemap, you can write it by hand, but the eas
 	    }],
 	    "_id": "github_trending"
     }
-    const options = {} // optional delay and pageLoadDelay
+    const options = {delay: 10, pageLoadDelay: 10, browser: 'headless'} // optional delay, pageLoadDelay and browser
+    webscraper(sitemap, options)
+        .then(function (scraped) {
+            // This is your scraped info
+        })
+
+By default webscraper-headless will open [jsdom](https://github.com/jsdom/jsdom) as a browser. This is a purely JS implementation of HTML. As such it has no native dependencies and it is very lightweighted. However, it is not capable of executing js which might be a hindrance in some cases. If that is your case, you can use chrome headless as a browser. Note that it will consume far more resources than jsdom and you need to have some native dependencies installed in the server. To use chrome headless do the following:
+
+    const sitemap = // same as previous example
+    const options = {browser: 'headless'}
     webscraper(sitemap, options)
         .then(function (scraped) {
             // This is your scraped info

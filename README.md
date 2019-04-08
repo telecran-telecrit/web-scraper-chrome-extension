@@ -1,5 +1,8 @@
 
 # Web Scraper
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/geoblink/web-scraper-chrome-extension.svg)](https://greenkeeper.io/)
+
 Web Scraper is a chrome browser extension and a library built for data extraction from web 
 pages. Using this extension you can create a plan (sitemap) how a web site 
 should be traversed and what should be extracted. Using these sitemaps the 

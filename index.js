@@ -53,9 +53,12 @@ function scrape (sitemapInfo, options = {}) {
       store,
       delay: options.delay || 500
     }, {})
-    s.run(function () {
-      // TODO there should be some error handling here
-      resolve(store.data)
+    s.run(function (err) {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(store.data)
+      }
     })
   })
 }

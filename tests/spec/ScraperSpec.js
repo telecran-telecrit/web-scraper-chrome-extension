@@ -4,8 +4,10 @@ const assert = require('chai').assert
 const Sitemap = require('./../../extension/scripts/Sitemap')
 const FakeStore = require('./../FakeStore')
 const Scraper = require('./../../extension/scripts/Scraper')
+const Job = require('./../../extension/scripts/Job')
 const utils = require('./../utils')
 const globals = require('../globals')
+const sinon = require('sinon')
 
 describe('Scraper', function () {
   var q, store, $el
@@ -13,7 +15,7 @@ describe('Scraper', function () {
   let document
   let window
   let Browser
-
+  const sandbox = sinon.createSandbox()
   beforeEach(function () {
     $ = globals.$
     document = globals.document
@@ -27,6 +29,48 @@ describe('Scraper', function () {
   afterEach(function () {
     while (document.body.firstChild) document.body.removeChild(document.body.firstChild)
   })
+  afterEach(function () {
+    sandbox.restore()
+  })
+
+  it('Should handle error on job', function (done) {
+    sandbox.stub(Job.prototype, 'execute')
+      .callsFake(function (params, callback) {
+        callback(new Error('Fake error test'))
+      })
+    var b = document.querySelector('#scraper-test-one-page a')
+    console.log(b)
+    var sitemap = new Sitemap({
+      id: 'test',
+      startUrl: 'http://test.lv/',
+      selectors: [
+        {
+          'id': 'a',
+          'selector': '#scraper-test-one-page a',
+          'multiple': false,
+          type: 'SelectorText',
+          'parentSelectors': [
+            '_root'
+          ]
+        }
+      ]
+    }, {$, document, window})
+
+    var browser = new Browser({
+      pageLoadDelay: 100
+    })
+
+    var s = new Scraper({
+      queue: q,
+      sitemap: sitemap,
+      browser: browser,
+      store: store
+    }, {$, document, window})
+    s.run(function (err) {
+      err ? done() : done(new Error('Test should have failed')) 
+    })
+  })
+
 
   it('should be able to scrape one page', function (done) {
     var b = document.querySelector('#scraper-test-one-page a')
@@ -206,7 +250,6 @@ describe('Scraper', function () {
     var image = Scraper.prototype.getFileFilename('image.jpg')
     assert.equal(image, 'image.jpg')
   })
-
   // Not very clear what should jsdom do in this case
   it.skip('should store images', function (done) {
     var record = {

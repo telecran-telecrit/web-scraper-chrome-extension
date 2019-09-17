@@ -10,7 +10,7 @@ const globals = require('../globals')
 const sinon = require('sinon')
 
 describe('Scraper', function () {
-  var q, store, $el
+  let q, store, $el
   let $
   let document
   let window
@@ -38,9 +38,9 @@ describe('Scraper', function () {
       .callsFake(function (params, callback) {
         callback(new Error('Fake error test'))
       })
-    var b = document.querySelector('#scraper-test-one-page a')
+    const b = document.querySelector('#scraper-test-one-page a')
     console.log(b)
-    var sitemap = new Sitemap({
+    const sitemap = new Sitemap({
       id: 'test',
       startUrl: 'http://test.lv/',
       selectors: [
@@ -56,18 +56,22 @@ describe('Scraper', function () {
       ]
     }, {$, document, window})
 
-    var browser = new Browser({
+    let browser = new Browser({
       pageLoadDelay: 100
     })
 
-    var s = new Scraper({
+    const s = new Scraper({
       queue: q,
       sitemap: sitemap,
       browser: browser,
       store: store
     }, {$, document, window})
     s.run(function (err) {
-      err ? done() : done(new Error('Test should have failed')) 
+      if (err) {
+        done()
+      } else {
+        done(new Error('Test should have failed')) 
+      }
     })
   })
 

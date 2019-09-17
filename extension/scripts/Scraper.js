@@ -90,8 +90,8 @@ Scraper.prototype = {
     job.execute(this.browser, function (err, job) {
       if (err) {
         // jobs don't seem to return anything
-        this.executionCallback(err)
         console.error('Error in job', err)
+        this.executionCallback(err)
         return
       }
       debug('finished executing')

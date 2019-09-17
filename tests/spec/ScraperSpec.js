@@ -38,8 +38,7 @@ describe('Scraper', function () {
       .callsFake(function (params, callback) {
         callback(new Error('Fake error test'))
       })
-    const b = document.querySelector('#scraper-test-one-page a')
-    console.log(b)
+
     const sitemap = new Sitemap({
       id: 'test',
       startUrl: 'http://test.lv/',
@@ -77,8 +76,6 @@ describe('Scraper', function () {
 
 
   it('should be able to scrape one page', function (done) {
-    var b = document.querySelector('#scraper-test-one-page a')
-    console.log(b)
     var sitemap = new Sitemap({
       id: 'test',
       startUrl: 'http://test.lv/',

@@ -10,6 +10,10 @@ To use it as an extension install it from [Chrome store] [chrome-store]
 
 To use it as a library do `npm i web-scraper-headless`
 
+### Required (to the special build)
+ 1. node v10.24.1 (or fatal gulp error)
+ 2. gulp 2.3.0 - 3.9.1
+
 ### Features
 
  1. Scrape multiple pages
